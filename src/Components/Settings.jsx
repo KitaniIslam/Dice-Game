@@ -7,6 +7,7 @@ const Settings = () => {
   const [secondPlayerName, setSecondPlayerName] = useState(null)
   const [maxScore, setMaxScore] = useState(15)
   const [formHaveError, setErrors] = useState({ haveError: false, messages: [] })
+  const history = useHistory()
 
   const changeFirstUserName = (payload) => {
     setFirstPlayerName(payload.currentTarget.value)
@@ -37,15 +38,10 @@ const Settings = () => {
       errorMessages.push('Please set a value Greater than or equal 15')
     }
 
-    if (haveErrors) {
-      setErrors({ ...formHaveError, messages: errorMessages, haveError: true })
-    } else {
-      setErrors({ ...formHaveError, messages: [], haveError: false })
-    }
+    setErrors({ ...formHaveError, messages: errorMessages, haveError: haveErrors })
     return haveErrors
   }
 
-  const history = useHistory()
   const createGame = (payload) => {
     payload.preventDefault()
     if (checkForScoreErrors(maxScore)) return

@@ -7,10 +7,10 @@ function App() {
     <Router>
       <Switch>
         {/* <Redirect exact from="/" to="/game" /> */}
-        <Router exact path="/" >
+        <Route exact path="/" >
           <Home />
-        </Router>
-        <Route exact path="/game">
+        </Route>
+        <Route path="/game">
           <Game />
         </Route>
       </Switch>

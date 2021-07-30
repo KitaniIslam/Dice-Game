@@ -1,5 +1,7 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { setGameConfiguration } from '../Store/Game'
 
 const Settings = () => {
 
@@ -8,6 +10,7 @@ const Settings = () => {
   const [maxScore, setMaxScore] = useState(15)
   const [formHaveError, setErrors] = useState({ haveError: false, messages: [] })
   const history = useHistory()
+  const dispatch = useDispatch()
 
   const changeFirstUserName = (payload) => {
     setFirstPlayerName(payload.currentTarget.value)
@@ -50,7 +53,7 @@ const Settings = () => {
       secondPlayerName: secondPlayerName?.length > 0 ? secondPlayerName : 'Player 2',
       maxScore
     }
-    // TODO: submite gameConfigObject to Store
+    dispatch(setGameConfiguration(gameConfigObject))
     history.push('/game')
   }
 

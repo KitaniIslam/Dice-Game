@@ -55,23 +55,67 @@ const Settings = () => {
   }
 
   return (
-    <form onSubmit={createGame}>
-      <label>
-        Player 1:
-        <input type="text" name="player1" placeholder="Player 1" onChange={changeFirstUserName} />
-      </label>
-      <label>
-        Player 2:
-        <input type="text" name="player2" placeholder="Player 2" onChange={changeSecondUserName} />
-      </label>
-      <label>
-        Max Score:
-        <input type="number" name="score" value={maxScore} placeholder="Numbers only" onChange={setScore} />
-      </label>
-      {formHaveError.haveError && formHaveError.messages.map((errorMessage, index) => (<p key={index}>{errorMessage}</p>))}
-      <input type="submit" value="Submit" />
-    </form>
+    <div style={style.settingsContainer}>
+      <h1 style={style.formTitle}>Game Setting</h1>
+      <form onSubmit={createGame} style={style.formContainer}>
+        <label style={style.label}>
+          Player 1
+          <input type="text" name="player1" placeholder="Player 1" onChange={changeFirstUserName} />
+        </label>
+        <label style={style.label}>
+          Player 2
+          <input type="text" name="player2" placeholder="Player 2" onChange={changeSecondUserName} />
+        </label>
+        <label style={style.label}>
+          Max Score
+          <input type="number" name="score" value={maxScore} placeholder="Numbers only" onChange={setScore} />
+        </label>
+        {formHaveError.haveError && formHaveError.messages.map((errorMessage, index) => (<li key={index} style={style.errorMessage}>{errorMessage}</li>))}
+        <input type="submit" value="Submit" style={style.submitBtn} />
+      </form>
+    </div>
   )
+}
+
+const style = {
+  settingsContainer: {
+    'display': 'flex',
+    'flexDirection': 'column',
+    'alignItems': 'center',
+    'padding': '2rem',
+    'boxShadow': '0px 10px 40px rgba(0, 0, 0, 0.25)',
+    'borderRadius': '7px'
+
+  },
+  formContainer: {
+    'display': 'flex',
+    'flexDirection': 'column',
+    'justifyContent': 'center',
+    'minWidth': '280px'
+  },
+  formTitle: {
+    'margin': '0 0 3rem 0'
+  },
+  label: {
+    'display': 'flex',
+    'flexDirection': 'row',
+    'justifyContent': 'space-between',
+    'margin': '0 0 2rem 0'
+  },
+  submitBtn: {
+    'backgroundColor': '#F00D5F',
+    'color': '#ffffff',
+    'borderRadius': '3px',
+    'border': 'none',
+    'width': 'fit-content',
+    'padding': '6px 24px',
+    'alignSelf': 'center',
+    'margin': '1rem 0 0 0'
+  },
+  errorMessage: {
+    'color': '#F00D5F',
+    'fontSize': '0.8rem'
+  }
 }
 
 export default Settings

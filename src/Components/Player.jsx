@@ -1,6 +1,6 @@
 import Button from "./Button"
 
-const Player = ({ playerName,playerId, action, totalScore, gainedScore, myTurn,showLastAddedScore }) => {
+const Player = ({ playerName,playerId, action, totalScore, gainedScore, myTurn,showLastAddedScore, allowedToPlay }) => {
 
   return (
     <div className="player" style={style.player}>
@@ -13,7 +13,7 @@ const Player = ({ playerName,playerId, action, totalScore, gainedScore, myTurn,s
           <p>{totalScore}</p>
           {showLastAddedScore && <div style={style.addToScore}>+{gainedScore}</div>}
         </div>
-        <Button text="Run" active={myTurn} action={action} playerId={playerId}/>
+        <Button text="Run" active={myTurn} action={action} playerId={playerId} allowedToClick={allowedToPlay}/>
       </div>
     </div>
   )

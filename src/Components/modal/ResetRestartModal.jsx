@@ -1,21 +1,19 @@
-import { useState } from 'react';
+import { useSelector } from "react-redux"
 import './style.css'
 import Button from '../Button'
 
 
 
 const ResetRestartModal = () => {
-  
-  const [show, setModalVisible] = useState(true)
-  const handleClose = () => {
-    setModalVisible(false)
-  }
+  const { gameEnded, winnerName } = useSelector(state => state.game.winner)
+
+  const handleClose = () => {}
   return (
-    <div className={show ? 'modal display-block' : 'modal display-none'}>
+    <div className={gameEnded ? 'modal display-block' : 'modal display-none'}>
       <section className='modal-main'>
-        <p>Player X win</p>
-        <Button active={true} action={handleClose} text="New Game" playerId={0}></Button>
-        <Button active={true} action={handleClose} text="Exit" playerId={0} customStyle= {style.exitButton}></Button>
+        <p>{winnerName} win</p>
+        <Button active={true} action={handleClose} text="New Game" playerId={0} allowedToClick={true} ></Button>
+        <Button active={true} action={handleClose} text="Exit" playerId={0} customStyle={style.exitButton} allowedToClick={true}></Button>
       </section>
     </div>
   );

@@ -7,7 +7,7 @@ import { selectPlayerToStart, setRandomBonus, switchPlayer } from '../Store/Game
 import Dice from "../Components/Dice"
 
 const Game = () => {
-  const { gameConfigObject, isTheGameCreated, firstPlayer, secondPlayer, lastAddedScore } = useSelector(state => state.game)
+  const { gameConfigObject, isTheGameCreated, firstPlayer, secondPlayer, lastAddedScore, allowedToPlay } = useSelector(state => state.game)
   const displayBonusFirstPlayer = useSelector(state => state.game.firstPlayer.showLastAddedScore)
   const displayBonusSecondPlayer = useSelector(state => state.game.secondPlayer.showLastAddedScore)
   const history = useHistory()
@@ -36,9 +36,27 @@ const Game = () => {
   return (
     <div style={style.gameWrapper}>
       <div style={style.players}>
-        <Player playerName={gameConfigObject.firstPlayerName} playerId={1} action={play} myTurn={firstPlayer.myTurn} totalScore={firstPlayer.totalScore} gainedScore={lastAddedScore} showLastAddedScore={firstPlayer.showLastAddedScore} />
+        <Player
+          playerName={gameConfigObject.firstPlayerName}
+          playerId={1}
+          action={play}
+          myTurn={firstPlayer.myTurn}
+          totalScore={firstPlayer.totalScore}
+          gainedScore={lastAddedScore}
+          showLastAddedScore={firstPlayer.showLastAddedScore}
+          allowedToPlay={allowedToPlay}
+        />
         <div style={style.box}><Dice /></div>
-        <Player playerName={gameConfigObject.secondPlayerName} playerId={2} action={play} myTurn={secondPlayer.myTurn} totalScore={secondPlayer.totalScore} gainedScore={lastAddedScore} showLastAddedScore={secondPlayer.showLastAddedScore} />
+        <Player
+          playerName={gameConfigObject.secondPlayerName}
+          playerId={2}
+          action={play}
+          myTurn={secondPlayer.myTurn}
+          totalScore={secondPlayer.totalScore}
+          gainedScore={lastAddedScore}
+          showLastAddedScore={secondPlayer.showLastAddedScore}
+          allowedToPlay={allowedToPlay}
+        />
       </div>
       <ResetRestartModal />
     </div>

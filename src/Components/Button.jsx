@@ -1,15 +1,16 @@
 import PropTypes from 'prop-types'
 
-const Button = ({ text, active, action }) => {
+const Button = ({ text, active, action, playerId }) => {
   return (
     <button
       style={{
         ...style.submitBtn,
         'backgroundColor': active ? '#F00D5F' : '#CCCCCC',
-        'color': '#ffffff'
+        'color': '#ffffff',
+        'cursor': active ? 'pointer' : 'not-allowed'
       }}
-      disabled={active}
-      onClick={() => action()}>
+      disabled={!active}
+      onClick={() => action(playerId)}>
       {text}
     </button>
   )
@@ -18,7 +19,8 @@ const Button = ({ text, active, action }) => {
 Button.propTypes = {
   text: PropTypes.string.isRequired,
   active: PropTypes.bool.isRequired,
-  action: PropTypes.func.isRequired
+  action: PropTypes.func.isRequired,
+  playerId: PropTypes.number.isRequired
 }
 
 const style = {
@@ -28,7 +30,7 @@ const style = {
     'width': 'fit-content',
     'padding': '6px 24px',
     'alignSelf': 'center',
-    'margin': '1rem 0 0 0'
+    'margin': '1rem 0 0 0',
   }
 }
 

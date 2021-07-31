@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import { useHistory } from "react-router-dom"
 import Player from "../Components/Player"
+import ResetRestartModal from "../Components/modal/ResetRestartModal"
 import { selectPlayerToStart, setRandomBonus, switchPlayer } from '../Store/Game'
 import Dice from "../Components/Dice"
 
@@ -39,6 +40,7 @@ const Game = () => {
         <div style={style.box}><Dice /></div>
         <Player playerName={gameConfigObject.secondPlayerName} playerId={2} action={play} myTurn={secondPlayer.myTurn} totalScore={secondPlayer.totalScore} gainedScore={lastAddedScore} showLastAddedScore={secondPlayer.showLastAddedScore} />
       </div>
+      <ResetRestartModal />
     </div>
   )
 }

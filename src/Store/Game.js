@@ -100,10 +100,14 @@ export const game = createSlice({
         state.winner = {...state.winner, gameEnded: true, winnerName: state.gameConfigObject.secondPlayerName}
       }
     },
+    freezeTheGame(state) {
+      state.allowedToPlay = false
+      state.winner = {...state.winner, gameEnded: false, winnerName: null }
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setGameConfiguration, selectPlayerToStart, switchPlayer, allowDisplayBonus, checkWinner, setRandomBonus } = game.actions
+export const { setGameConfiguration, selectPlayerToStart, switchPlayer, allowDisplayBonus, checkWinner, setRandomBonus, freezeTheGame } = game.actions
 
 export default game.reducer

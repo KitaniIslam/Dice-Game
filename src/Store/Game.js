@@ -1,12 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
-export const setRandomBonus = createAsyncThunk(
-  'game/setRandomBonus',
-  async (payload) => {
-    const randomScore = await Math.floor(Math.random() * 6) + 1
-    return {...payload, randomScore: randomScore}
-  }
-)
 
 export const game = createSlice({
   name: 'game',
@@ -71,6 +64,21 @@ export const game = createSlice({
       }
       game.caseReducers.checkWinner(state)
     },
+    setRandomBonus(state, action) {
+      state.allowedToPlay = false
+      let newScore = Math.floor(Math.random() * 6) + 1
+      
+      if (newScore === state.lastAddedScore) {
+        newScore += (Math.floor(Math.random() * 5) + 1)
+
+        if (newScore > 6) {
+          newScore = newScore % 6
+        }
+      }
+
+      state.lastAddedScore = newScore
+      state.mostResentPlayer = action.payload.player
+    },
     switchPlayer(state) {
       switch (state.mostResentPlayer) {
         case 1:
@@ -93,16 +101,9 @@ export const game = createSlice({
       }
     },
   },
-  extraReducers: {
-    [setRandomBonus.fulfilled] : (state, action) => {
-      state.allowedToPlay = false
-      state.lastAddedScore = action.payload.randomScore
-      state.mostResentPlayer= action.payload.player
-    }
-  }
 })
 
 // Action creators are generated for each case reducer function
-export const { setGameConfiguration, selectPlayerToStart, switchPlayer, allowDisplayBonus, checkWinner } = game.actions
+export const { setGameConfiguration, selectPlayerToStart, switchPlayer, allowDisplayBonus, checkWinner, setRandomBonus } = game.actions
 
 export default game.reducer

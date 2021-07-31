@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types'
 
-const Button = ({ text, active, action, playerId }) => {
+const Button = ({ text, active, action, playerId, customStyle }) => {
   return (
     <button
-      style={{
+      style={customStyle || {
         ...style.submitBtn,
         'backgroundColor': active ? '#F00D5F' : '#CCCCCC',
-        'color': '#ffffff',
+        'color': active ? '#ffffff' :'#7f8c8d',
         'cursor': active ? 'pointer' : 'not-allowed'
       }}
       disabled={!active}
@@ -20,7 +20,8 @@ Button.propTypes = {
   text: PropTypes.string.isRequired,
   active: PropTypes.bool.isRequired,
   action: PropTypes.func.isRequired,
-  playerId: PropTypes.number.isRequired
+  playerId: PropTypes.number.isRequired,
+  customStyle: PropTypes.object
 }
 
 const style = {

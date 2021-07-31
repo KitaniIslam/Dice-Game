@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types'
 
-const Button = ({ text, active, action, playerId, customStyle }) => {
+const Button = ({ text, active, action, playerId, customStyle, allowedToClick }) => {
   return (
     <button
       style={customStyle || {
         ...style.submitBtn,
         'backgroundColor': active ? '#F00D5F' : '#CCCCCC',
         'color': active ? '#ffffff' :'#7f8c8d',
-        'cursor': active ? 'pointer' : 'not-allowed'
+        'cursor': active && allowedToClick ? 'pointer' : 'not-allowed'
       }}
-      disabled={!active}
+      disabled={!active || !allowedToClick}
       onClick={() => action(playerId)}>
       {text}
     </button>
@@ -21,7 +21,8 @@ Button.propTypes = {
   active: PropTypes.bool.isRequired,
   action: PropTypes.func.isRequired,
   playerId: PropTypes.number.isRequired,
-  customStyle: PropTypes.object
+  customStyle: PropTypes.object,
+  allowedToClick: PropTypes.bool.isRequired
 }
 
 const style = {

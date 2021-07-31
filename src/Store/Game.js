@@ -1,4 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+
+export const setRandomBonus = createAsyncThunk(
+  'game/setRandomBonus',
+  async (payload) => {
+    const randomScore = await Math.floor(Math.random() * 6) + 1
+    return {...payload, randomScore: randomScore}
+  }
+)
 
 export const game = createSlice({
   name: 'game',
@@ -51,12 +59,6 @@ export const game = createSlice({
       state.mostResentPlayer = randomPlayerId
       state.allowedToPlay = true
     },
-    setRandomBonus(state, action) {
-      state.allowedToPlay = false
-      const randomScore = Math.floor(Math.random() * 6) + 1
-      state.lastAddedScore = randomScore
-      state.mostResentPlayer= action.payload.player
-    },
     allowDisplayBonus(state) {
       const lastAddedScore = state.lastAddedScore
       switch (state.mostResentPlayer) {
@@ -72,12 +74,12 @@ export const game = createSlice({
     switchPlayer(state) {
       switch (state.mostResentPlayer) {
         case 1:
-          state.firstPlayer = {...state.firstPlayer, myTurn: false, showLastAddedScore: false}
-          state.secondPlayer = {...state.secondPlayer, myTurn: true, showLastAddedScore: false}
+          state.firstPlayer = {...state.firstPlayer, myTurn: state.lastAddedScore === 6, showLastAddedScore: false}
+          state.secondPlayer = {...state.secondPlayer, myTurn: state.lastAddedScore !== 6, showLastAddedScore: false}
           break;
         default:
-          state.secondPlayer = {...state.secondPlayer, myTurn: false, showLastAddedScore: false}
-          state.firstPlayer = {...state.firstPlayer, myTurn: true, showLastAddedScore: false}
+          state.secondPlayer = {...state.secondPlayer, myTurn: state.lastAddedScore === 6, showLastAddedScore: false}
+          state.firstPlayer = {...state.firstPlayer, myTurn: state.lastAddedScore !== 6, showLastAddedScore: false}
           break;
       }
       state.allowedToPlay = true
@@ -90,10 +92,17 @@ export const game = createSlice({
         state.winner = {...state.winner, gameEnded: true, winnerName: state.gameConfigObject.secondPlayerName}
       }
     },
+  },
+  extraReducers: {
+    [setRandomBonus.fulfilled] : (state, action) => {
+      state.allowedToPlay = false
+      state.lastAddedScore = action.payload.randomScore
+      state.mostResentPlayer= action.payload.player
+    }
   }
 })
 
 // Action creators are generated for each case reducer function
-export const { setGameConfiguration, selectPlayerToStart, switchPlayer, setRandomBonus, allowDisplayBonus, checkWinner } = game.actions
+export const { setGameConfiguration, selectPlayerToStart, switchPlayer, allowDisplayBonus, checkWinner } = game.actions
 
 export default game.reducer

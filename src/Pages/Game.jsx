@@ -19,15 +19,20 @@ const Game = () => {
       history.replace('/')
       return
     }
+
     dispatch(selectPlayerToStart())
     return
-  }, [dispatch, history, isTheGameCreated])
+    // eslint-disable-next-line
+  }, [isTheGameCreated])
 
   useEffect(() => {
-    setTimeout(() => {
-      dispatch(switchPlayer())
-    }, 1000)
-  }, [dispatch, displayBonusFirstPlayer, displayBonusSecondPlayer])
+    if (displayBonusFirstPlayer || displayBonusSecondPlayer) {
+      setTimeout(() => {
+        dispatch(switchPlayer())
+      }, 1000)
+    }
+    // eslint-disable-next-line
+  }, [displayBonusFirstPlayer, displayBonusSecondPlayer])
 
 
   const play = (payload) => {

@@ -1,4 +1,5 @@
 # Dice Game
+Link to the Game online [here](https://dice-game-demo.herokuapp.com/)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

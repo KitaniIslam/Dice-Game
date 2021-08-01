@@ -104,19 +104,27 @@ export const game = createSlice({
       state.allowedToPlay = false
       state.winner = {...state.winner, gameEnded: false, winnerName: null }
     },
-    restartTheGame(state) {
+    restartTheGame(state, action) {
       state.firstPlayer = {...state.firstPlayer, totalScore: 0, showLastAddedScore: false, myTurn: false}
       state.secondPlayer = {...state.secondPlayer, totalScore: 0, showLastAddedScore: false, myTurn: false}
       state.winner = {...state.winner, gameEnded: false, winnerName: null }
       state.lastAddedScore = 
       state.winner = {...state.winner, gameEnded: false, winnerName: null }
-      
-      game.caseReducers.selectPlayerToStart(state)
+
+      if (action.payload.exit) {
+        state.isTheGameCreated = false
+      } else {
+        game.caseReducers.selectPlayerToStart(state)
+      }
     },
+    exitTheGame(state, action) {
+      // call restartTheGame() to clean the store for the next game and exit
+      game.caseReducers.restartTheGame(state, {payload: { exit: action.payload.exit }})
+    }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setGameConfiguration, selectPlayerToStart, switchPlayer, allowDisplayBonus, checkWinner, setRandomBonus, freezeTheGame, restartTheGame } = game.actions
+export const { setGameConfiguration, selectPlayerToStart, switchPlayer, allowDisplayBonus, checkWinner, setRandomBonus, freezeTheGame, restartTheGame, exitTheGame } = game.actions
 
 export default game.reducer

@@ -6,7 +6,6 @@ function App() {
   return (
     <Router>
       <Switch>
-        {/* <Redirect exact from="/" to="/game" /> */}
         <Route exact path="/" >
           <Home />
         </Route>

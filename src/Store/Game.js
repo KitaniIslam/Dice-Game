@@ -108,7 +108,7 @@ export const game = createSlice({
       state.firstPlayer = {...state.firstPlayer, totalScore: 0, showLastAddedScore: false, myTurn: false}
       state.secondPlayer = {...state.secondPlayer, totalScore: 0, showLastAddedScore: false, myTurn: false}
       state.winner = {...state.winner, gameEnded: false, winnerName: null }
-      state.lastAddedScore = 
+      state.lastAddedScore = 0
       state.winner = {...state.winner, gameEnded: false, winnerName: null }
 
       if (action.payload.exit) {

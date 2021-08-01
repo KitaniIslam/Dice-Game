@@ -29,7 +29,7 @@ at first redirect user to /game directly
   <Redirect exact from="/" to="/game" />
 ```
 
-then create a switch between setting and the game component after moving the game page content to new gameComponent at `/src/components`.
+then create a switch between settings and the game component after moving the game page content to new Component at `/src/components`.
 
 and it's going to looks like that :
 

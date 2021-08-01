@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { freezeTheGame, restartTheGame } from '../../Store/Game'
+import { freezeTheGame, restartTheGame, exitTheGame } from '../../Store/Game'
 import './style.css'
 import Button from '../Button'
 
@@ -8,8 +8,11 @@ import Button from '../Button'
 const ResetRestartModal = () => {
   const { gameEnded, winnerName } = useSelector(state => state.game.winner)
   const dispatch = useDispatch()
-  const resetTheGame = () => {
-    dispatch(restartTheGame())
+  const restart = () => {
+    dispatch(restartTheGame({ exit: false }))
+  }
+  const reset = () => {
+    dispatch(exitTheGame({ exit: true }))
   }
   const closeModal = () => {
     dispatch(freezeTheGame())
@@ -20,8 +23,8 @@ const ResetRestartModal = () => {
         <i className="close-icon fas fa-times-circle" onClick={() => closeModal()}></i>
         <p className="winner-title">{winnerName} win</p>
         <div>
-          <Button active={true} action={resetTheGame} text="New Game" playerId={0} allowedToClick={true} ></Button>
-          <Button active={true} action={closeModal} text="Exit" playerId={0} customStyle={style.exitButton} allowedToClick={true}></Button>
+          <Button active={true} action={restart} text="New Game" playerId={0} allowedToClick={true} ></Button>
+          <Button active={true} action={reset} text="Exit" playerId={0} customStyle={style.exitButton} allowedToClick={true}></Button>
         </div>
       </section>
     </div>
